@@ -32,7 +32,7 @@ Se debe ver el siguiente resultado en su consola:
 
 
 > [!IMPORTANT]
-> A partir de aquí continua con la guía de [frontend](https://www.youtube.com/watch?v=mCdA4bJAGGk).
+> A partir de aquí continua con la guía de [frontend](https://github.com/josamaci/Integradora-front).
 
 
 ## Créditos
