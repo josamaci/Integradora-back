@@ -41,4 +41,4 @@ Este proyecto fue desarrollado por:
 - [Jairo Alcívar](https://github.com/JairoAb). :feelsgood:
 - [José Macías](https://github.com/josamaci). :shipit:
 
-Con la asesoría de [Javie Tibau](https://github.com/jtibau) :godmode:
+Con la asesoría de [Javier Tibau](https://github.com/jtibau). :godmode:
