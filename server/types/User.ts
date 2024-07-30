@@ -4,6 +4,13 @@ export interface User {
     room: string,
     isAdmin: boolean,
     info: {
-        teamColor: string
+        teamColor: string,
+        taps: number,
+        titulo?: string,
+        descripcion?: string,
+        link?: string,
+        playersCount?: number,
+        caballosCount?: number,
+        teamsColor?: Array<String>,
     }
 }

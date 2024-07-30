@@ -1,9 +1,13 @@
-import { GenericState } from "./GenericState";
-
-export interface CaballosState extends GenericState {
+export interface CaballosState {
     gray: number,
     red: number,
     green: number,
     blue: number,
     yellow: number,
+    winner?: string
+    loser?: string
+    isReadyToStarted?: boolean,
+    hasStopped?: boolean,
+    hasStarded?: boolean,
+    hasFinished?: boolean
 }
