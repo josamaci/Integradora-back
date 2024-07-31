@@ -22,9 +22,6 @@ const initCaballos = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
   const teamsColorOG = ['red', 'green', 'blue', 'yellow', 'gray']
   const teamsPlayerCountOG = [0, 0, 0, 0, 0]
 
-  let teamsColor = ['red', 'green', 'blue', 'yellow', 'gray']
-  let teamsPlayerCount = [0, 0, 0, 0, 0]
-
   //Namespace caballos
   const caballosNSP = io.of("/caballos");
 
@@ -59,10 +56,10 @@ const initCaballos = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
     caballosSocket.on('join-player', (roomID: string) => {
       try {
         userRoom = roomID
-        const colorID = GameManager.getIDTeamLessPlayers(teamsPlayerCount)
         const room = GameManager.getRoom(roomID)
+        const colorID = GameManager.getIDTeamLessPlayers(room!.teamsPlayerCount)
 
-        teamsPlayerCount[colorID] += 1
+        room!.teamsPlayerCount[colorID] += 1
 
         const user: User = {
           id: caballosSocket.id,
@@ -70,7 +67,7 @@ const initCaballos = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
           room: roomID,
           isAdmin: false,
           info: {
-            teamColor: teamsColor[colorID],
+            teamColor: room!.teamsColor[colorID],
             taps: 0,
             titulo: room != null && room.titulo != undefined ? room.titulo : 'Gracias por participar',
             descripcion: room != null && room.descripcion != undefined ? room.descripcion : 'Por favor llena el siguiente formulario para ayudarnos a mejorar Momentum',
@@ -125,6 +122,7 @@ const initCaballos = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
 
     caballosSocket.on('set-config', ({ room_id, configs }) => {
       GameManager.setConfigs(room_id, configs['caballosCount'], configs['titulo'], configs['descripcion'], configs['link'])
+      const room = GameManager.getRoom(room_id)
 
       if (configs['caballosCount'] != 5) {
         const shuffledArray = [...teamsColorOG];
@@ -133,13 +131,13 @@ const initCaballos = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
           [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
         }
 
-        teamsColor = shuffledArray.slice(0, configs['caballosCount']);
-        teamsPlayerCount = [...teamsPlayerCountOG].slice(0, configs['caballosCount']);
+        room!.teamsColor = shuffledArray.slice(0, configs['caballosCount']);
+        room!.teamsPlayerCount = [...teamsPlayerCountOG].slice(0, configs['caballosCount']);
       } else {
-        teamsColor = teamsColorOG;
-        teamsPlayerCount = teamsPlayerCountOG;
+        room!.teamsColor = teamsColorOG;
+        room!.teamsPlayerCount = teamsPlayerCountOG;
       }
-      GameManager.setTeamsColor(room_id, teamsColor)
+      GameManager.setTeamsColor(room_id, room!.teamsColor)
     })
 
     caballosSocket.on("tapping", (user: User) => {
@@ -203,8 +201,11 @@ const initCaballos = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
       if (typeof userRoom === 'string') {
         const user = GameManager.removeUser(caballosSocket.id, userRoom!)
         if (user) {
-          const colorID = teamsColor.findIndex((value) => value === user.info.teamColor)
-          teamsPlayerCount[colorID] -= 1
+          console.log('desconectando')
+          console.log(caballosSocket.id+" "+userRoom!)
+          const room = GameManager.getRoom(userRoom)
+          const colorID = room!.teamsColor.findIndex((value) => value === user.info.teamColor)
+          room!.teamsPlayerCount[colorID] -= 1
 
           const roomAdmin = GameManager.getUsersInRoom(userRoom).find((user: User) => user.isAdmin)
 

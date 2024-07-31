@@ -35,11 +35,13 @@ const getViewer = (room_id: string): User | void => {
 }
 
 const getIDTeamLessPlayers = (teamsPlayerCount: Array<number>): number => {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+  console.log(teamsPlayerCount)
   let playerCount = teamsPlayerCount[0]
   let id = 0
 
   for (let i = 1; i < teamsPlayerCount.length; i++) {
-    if (teamsPlayerCount[i] <= playerCount) {
+    if (teamsPlayerCount[i] < playerCount) {
       playerCount = teamsPlayerCount[i]
       id = i
     }
@@ -82,7 +84,9 @@ const addRoom = (room: string, state: CaballosState) => {
     rooms[room] = {
       users: [],
       state: state,
-      tapsTimes: {}
+      tapsTimes: {},
+      teamsColor: ['red', 'green', 'blue', 'yellow', 'gray'],
+      teamsPlayerCount: [0, 0, 0, 0, 0]
     }
   } catch (error) { }
 }

@@ -21,4 +21,7 @@ export const EASTER_EGG = [
   'Kombatiente Mortal',
   'Sombrero de Paja',
   'Dragón de Dojima',
+  'Fantasma de Esparta',
+  'Gambito de Dama',
+  'Anomalía Rítmica',
 ]

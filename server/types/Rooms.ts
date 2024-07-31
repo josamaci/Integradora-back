@@ -9,7 +9,8 @@ export interface Rooms {
         descripcion?: string,
         link?: string,
         caballosCount?: number,
-        teamsColor?: Array<String>,
+        teamsColor: Array<string>,
+        teamsPlayerCount: Array<number>,
         startTime?: string,
         finishTime?: string,
         tapsTimes: {
